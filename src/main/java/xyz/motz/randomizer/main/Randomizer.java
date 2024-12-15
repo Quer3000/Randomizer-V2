@@ -19,6 +19,7 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.motz.randomizer.commands.*;
@@ -137,6 +138,16 @@ public class Randomizer extends JavaPlugin implements Listener {
     }
 
 
+    @EventHandler
+    public void crafting(CraftItemEvent event) {
+        if (this.enabled) {
+            if (event.getInventory().getResult() != null) {
+                event.getInventory().setResult(new ItemStack(getPartnerItem(event.getInventory().getResult().getType())));
+            }
+        }
+    }
+
+
     public Material getPartner(Material mat) {
         Material randpart;
         try {
@@ -157,4 +168,13 @@ public class Randomizer extends JavaPlugin implements Listener {
         return randpart;
     }
 
+    public Material getPartnerItem(Material mat) {
+        Material randpart;
+        try {
+            randpart = Material.valueOf(this.itemsConfig.getString("items." + mat.toString()));
+        } catch (Exception e) {
+            randpart = mat;
+        }
+        return randpart;
+    }
 }

@@ -65,9 +65,28 @@ public class ShuffleCommand implements CommandExecutor {
             }
         }
 
+        //  ITEM SHUFFLE FOR CRAFTING (ITEMS)
+        plugin.remaining.clear();
+        for (Material mat : Material.values()) {
+            blacklist = plugin.getConfig().getList("blacklist");
+            if (mat.isItem() && !blacklist.contains(mat)) {
+                plugin.remaining.add(mat);
+            }
+        }
 
+        for (Material mat : Material.values()) {
+            if (mat.isItem() && !plugin.remaining.isEmpty()) {
+                Random r = new Random();
+                int rand = plugin.remaining.size() > 1
+                        ? r.nextInt(plugin.remaining.size() - 1)
+                        : 0;
 
-        // TODO: SHUFFLE IT FOR MOBS
+                itemsConfig.set("items." + mat, plugin.remaining.get(rand).toString());
+                plugin.remaining.remove(rand);
+            }
+        }
+
+        // SHUFFLE IT FOR MOBS
         plugin.remainingmobs.clear();
 
         plugin.remainingmobs.clear();
