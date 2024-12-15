@@ -148,9 +148,6 @@ public class Randomizer extends JavaPlugin implements Listener {
     }
 
 
-    // TODO: RANDOMIZED CHEST-LOOT
-
-
 
     public Material getPartner(Material mat) {
         Material randpart;

@@ -120,7 +120,7 @@ public class ShuffleCommand implements CommandExecutor {
         }
 
         sender.sendMessage(ChatColor.AQUA + "[RANDOMIZER] " + ChatColor.GREEN
-                + "The Random Pairs were successfully regenerated!");
+                + "The Random Pairs were successfully regenerated! Restart the server to apply the changes!");
         return true;
     }
 }
