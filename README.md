@@ -17,3 +17,7 @@ If you want to contribute to this project, you can do so by forking this repo an
 - Fork of the Plugin ([@querlenker](https://github.com/querlenker))
 - Original Plugin ([@motz0815](https://github.com/motz0815))
 
+### NEED TO FIX
+- config.yml
+- KELP breaking at the bottom
+- Destroying the DragonEgg with a piston or other items.
