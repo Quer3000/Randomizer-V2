@@ -9,7 +9,7 @@ For documentation and Usage see the spigot page of the original plugin:
 If you want to contribute to this project, you can do so by forking this repo and creating a pull request.
 
 
-- Fork of the Plugin ([@querlenker](https://github.com/querlenker))
+- Fork of the Plugin ([@quer3000](https://github.com/quer3000))
 - Original Plugin ([@motz0815](https://github.com/motz0815))
 
 ### NEED TO FIX
