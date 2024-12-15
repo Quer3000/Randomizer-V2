@@ -20,6 +20,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.motz.randomizer.commands.*;
@@ -76,12 +77,12 @@ public class Randomizer extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
-            if (this.enabled) {
-                e.setDropItems(false);
-                if (e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
-                    e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
-                            new ItemStack(getPartner(e.getBlock().getType())));
-                }
+        if (this.enabled) {
+            e.setDropItems(false);
+            if (e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+                e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
+                        new ItemStack(getPartner(e.getBlock().getType())));
+            }
         }
     }
 
@@ -96,7 +97,8 @@ public class Randomizer extends JavaPlugin implements Listener {
             });
         }
     }
-    // CREPER EXPLOSIONS DROP THE RANDOMIZED ITEMS
+
+    // CREEPER EXPLOSIONS DROP THE RANDOMIZED ITEMS
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
         if (this.enabled) {
@@ -132,12 +134,14 @@ public class Randomizer extends JavaPlugin implements Listener {
                     event.getDrops().clear();
                     event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(),
                             new ItemStack(getPartnerMobs(event.getEntityType())));
-                } else { this.getLogger().warning("The EntityType " + event.getEntityType() + " is not supported!"); }
+                } else {
+                    this.getLogger().warning("The EntityType " + event.getEntityType() + " is not supported!");
+                }
             }
         }
     }
 
- // RANDOMIZED CRAFTING
+    // RANDOMIZED CRAFTING
     @EventHandler
     public void crafting(CraftItemEvent event) {
         if (this.enabled) {
@@ -147,6 +151,21 @@ public class Randomizer extends JavaPlugin implements Listener {
         }
     }
 
+    // RANDOMIZED CHEST-LOOT#
+    @EventHandler
+    public void chestLoot(LootGenerateEvent event) {
+        if (this.enabled) {
+            List<Material> randomizedLoot = new ArrayList<>();
+            int i;
+            for (i = 0; i < event.getLoot().size(); i++) {
+                randomizedLoot.add(getPartnerItem(event.getLoot().get(i).getType()));
+            }
+            event.getLoot().clear();
+            for (i = randomizedLoot.size() - 1; i >= 0; i--) {
+                event.getLoot().add(new ItemStack(randomizedLoot.get(i)));
+            }
+        }
+    }
 
 
     public Material getPartner(Material mat) {

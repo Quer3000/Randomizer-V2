@@ -20,5 +20,4 @@ If you want to contribute to this project, you can do so by forking this repo an
 - SAPLINGS and STICKS drop from TREES due to the natural disappearing of the trees
 
 ## TODO
-- ADD RANDOMIZED CHEST-LOOT
 - ADD SETTINGS (GUI OR CONFIG) to configure Chest-Loot-, Crafting- and Block-Randomizer.
