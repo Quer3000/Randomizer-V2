@@ -6,6 +6,8 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
@@ -22,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import xyz.motz.randomizer.commands.*;
 import xyz.motz.randomizer.listeners.CommandTabListener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +38,8 @@ public class Randomizer extends JavaPlugin implements Listener {
     public static Randomizer plugin;
 
     public boolean enabled = this.getConfig().getBoolean("activated");
+    private FileConfiguration itemsConfig;
+    private File itemsFile;
 
     public static Randomizer getPlugin() {
         return plugin;
@@ -57,6 +62,15 @@ public class Randomizer extends JavaPlugin implements Listener {
         getCommand("randomizer").setExecutor(new RandomizerCommand());
         this.getConfig().options().copyDefaults();
         saveDefaultConfig();
+
+
+        // Initialize items.yml
+        itemsFile = new File(getDataFolder(), "items.yml");
+        if (!itemsFile.exists()) {
+            saveResource("items.yml", false);
+        }
+        itemsConfig = YamlConfiguration.loadConfiguration(itemsFile);
+
     }
 
     @EventHandler
@@ -125,7 +139,7 @@ public class Randomizer extends JavaPlugin implements Listener {
     public Material getPartner(Material mat) {
         Material randpart;
         try {
-            randpart = Material.valueOf(this.getConfig().getString("partners." + mat.toString()));
+            randpart = Material.valueOf(this.itemsConfig.getString("partners." + mat.toString()));
         } catch (Exception e) {
             randpart = mat;
         }
@@ -135,7 +149,7 @@ public class Randomizer extends JavaPlugin implements Listener {
     public Material getPartnerMobs(EntityType mob) {
         Material randpart;
         try {
-            randpart = Material.valueOf(this.getConfig().getString("partners-mobs." + mob.toString()));
+            randpart = Material.valueOf(this.itemsConfig.getString("partners-mobs." + mob.toString()));
         } catch (Exception e) {
             randpart = null;
         }
