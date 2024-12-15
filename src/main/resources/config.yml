@@ -30,9 +30,9 @@ blacklist:
 
 # Here, the random block - item partners are listed
 
-partners: {}
+partners:
 
 # Here, the random mob - item partners are listed
 
-partners-mobs: {}
+partners-mobs:
 

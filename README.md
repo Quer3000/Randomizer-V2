@@ -1,14 +1,9 @@
 # Randomizer
-[![Java CI with Gradle](https://github.com/motz0815/Randomizer/workflows/Java%20CI%20with%20Gradle/badge.svg)](https://github.com/motz0815/Randomizer/actions?query=workflow:"Java+CI+with+Gradle")
-[![GitHub release](https://img.shields.io/github/release/motz0815/Randomizer?include_prereleases=&sort=semver)](https://github.com/motz0815/Randomizer/releases/)
-[![License](https://img.shields.io/badge/License-GPLv3-blue)](#license)
-[![issues - Randomizer](https://img.shields.io/github/issues/motz0815/Randomizer)](https://github.com/motz0815/Randomizer/issues)
+A Minecraft Plugin for some ULTIMATE SURVIVAL CHALLENGE!
 
-A Minecraft Plugin for some extra survival challenge
-
-For documentation and Usage see the spigot or Hangar page: 
+For documentation and Usage see the spigot page of the original plugin:
 - https://www.spigotmc.org/resources/randomizer-1-13-2-1-18-2.77069/
-- https://hangar.papermc.io/motz/Randomizer
+  (We will do our own WIKI soon, if you need help add me on Discord: querlenker)
 
 ## Contribution
 If you want to contribute to this project, you can do so by forking this repo and creating a pull request.
