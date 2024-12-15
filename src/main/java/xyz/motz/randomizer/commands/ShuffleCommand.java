@@ -40,69 +40,58 @@ public class ShuffleCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Randomizer.getPlugin().getConfig();
+        Randomizer plugin = Randomizer.getPlugin();
         Randomizer.getPlugin().remaining.clear();
         itemsConfig.set("blocks", null);
         itemsConfig.set("mobs", null);
 
+        plugin.remaining.clear();
         for (Material mat : Material.values()) {
-            if (mat.isItem()) {
-                blacklist = Randomizer.getPlugin().getConfig().getList("blacklist");
-                if (!blacklist.contains(mat)) {
-                    Randomizer.getPlugin().remaining.add(mat);
-                }
+            blacklist = plugin.getConfig().getList("blacklist");
+            if (mat.isItem() && !blacklist.contains(mat)) {
+                plugin.remaining.add(mat);
             }
         }
 
         for (Material mat : Material.values()) {
-            if (!Randomizer.getPlugin().remaining.isEmpty()) {
+            if (mat.isBlock() && !plugin.remaining.isEmpty()) {
+                Random r = new Random();
+                int rand = plugin.remaining.size() > 1
+                        ? r.nextInt(plugin.remaining.size() - 1)
+                        : 0;
 
-                    if (mat.isBlock()) {
-                        Random r = new Random();
-                        int rand;
-                        if (Randomizer.getPlugin().remaining.size() != 1) {
-                            rand = r.nextInt(Randomizer.getPlugin().remaining.size() - 1);
-                        } else {
-                            rand = 0;
-                        }
-                        itemsConfig.set("partners." + mat, Randomizer.getPlugin().remaining.get(rand).toString());
-                        Randomizer.getPlugin().remaining.remove(rand);
-                    }
-                }
+                itemsConfig.set("blocks." + mat, plugin.remaining.get(rand).toString());
+                plugin.remaining.remove(rand);
             }
+        }
 
 
 
         // TODO: SHUFFLE IT FOR MOBS
-        Randomizer.getPlugin().remainingmobs.clear();
+        plugin.remainingmobs.clear();
 
+        plugin.remainingmobs.clear();
         for (Material mat : Material.values()) {
-            blacklist = Randomizer.getPlugin().getConfig().getList("blacklist");
-            if (!blacklist.contains(mat)) {
-                if (mat.isItem()) {
-                    Randomizer.getPlugin().remainingmobs.add(mat);
-                }
+            blacklist = plugin.getConfig().getList("blacklist");
+            if (mat.isItem() && !blacklist.contains(mat)) {
+                plugin.remainingmobs.add(mat);
             }
         }
 
         for (EntityType mob : EntityType.values()) {
-            if (!Randomizer.getPlugin().remainingmobs.isEmpty()) {
+            if (!plugin.remainingmobs.isEmpty()) {
+                Random r = new Random();
+                int rand = plugin.remainingmobs.size() > 1
+                        ? r.nextInt(plugin.remainingmobs.size() - 1)
+                        : 0;
 
-
-
-
-                    Random r = new Random();
-                    int rand;
-                    if (Randomizer.getPlugin().remainingmobs.size() != 1) {
-                        rand = r.nextInt(Randomizer.getPlugin().remainingmobs.size() - 1);
-                    } else {
-                        rand = 0;
-                    }
-                    itemsConfig.set("partners-mobs." + mob, Randomizer.getPlugin().remainingmobs.get(rand).toString());
-                    Randomizer.getPlugin().remainingmobs.remove(rand);
-                }
+                itemsConfig.set("mobs." + mob, plugin.remainingmobs.get(rand).toString());
+                plugin.remainingmobs.remove(rand);
             }
+        }
 
+
+        // Save the items configuration
         try {
             itemsConfig.save(itemsFile);
         } catch (IOException e) {

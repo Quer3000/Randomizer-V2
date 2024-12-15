@@ -6,6 +6,5 @@
 # Here, the random mob - item partners are listed
 #
 
-partners:
-
-partners-mobs:
+blocks: {}
+mobs: {}

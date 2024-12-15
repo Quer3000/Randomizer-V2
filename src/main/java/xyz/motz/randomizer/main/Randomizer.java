@@ -127,10 +127,11 @@ public class Randomizer extends JavaPlugin implements Listener {
     public void onEntityDeath(EntityDeathEvent event) {
         if (this.enabled) {
             if (!event.getEntityType().equals(EntityType.PLAYER)) {
-
-            event.getDrops().clear();
-              event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(),
-            new ItemStack(getPartnerMobs(event.getEntityType())));
+                if (getPartnerMobs(event.getEntityType()) != null) {
+                    event.getDrops().clear();
+                    event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(),
+                            new ItemStack(getPartnerMobs(event.getEntityType())));
+                } else { this.getLogger().warning("The EntityType " + event.getEntityType() + " is not supported!"); }
             }
         }
     }
@@ -139,7 +140,7 @@ public class Randomizer extends JavaPlugin implements Listener {
     public Material getPartner(Material mat) {
         Material randpart;
         try {
-            randpart = Material.valueOf(this.itemsConfig.getString("partners." + mat.toString()));
+            randpart = Material.valueOf(this.itemsConfig.getString("blocks." + mat.toString()));
         } catch (Exception e) {
             randpart = mat;
         }
@@ -149,7 +150,7 @@ public class Randomizer extends JavaPlugin implements Listener {
     public Material getPartnerMobs(EntityType mob) {
         Material randpart;
         try {
-            randpart = Material.valueOf(this.itemsConfig.getString("partners-mobs." + mob.toString()));
+            randpart = Material.valueOf(this.itemsConfig.getString("mobs." + mob.toString()));
         } catch (Exception e) {
             randpart = null;
         }
