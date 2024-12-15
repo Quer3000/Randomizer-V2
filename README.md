@@ -15,4 +15,5 @@ If you want to contribute to this project, you can do so by forking this repo an
 ### NEED TO FIX
 - config.yml
 - KELP breaking at the bottom
-- Destroying the DragonEgg with a piston or other items.
+- Destroying the DragonEgg with a piston or other items
+- If you destroy 2 slabs above each-other just one random item will be dropped.
