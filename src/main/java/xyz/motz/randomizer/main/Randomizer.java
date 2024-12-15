@@ -137,7 +137,7 @@ public class Randomizer extends JavaPlugin implements Listener {
         }
     }
 
-
+ // RANDOMIZED CRAFTING
     @EventHandler
     public void crafting(CraftItemEvent event) {
         if (this.enabled) {
@@ -146,6 +146,10 @@ public class Randomizer extends JavaPlugin implements Listener {
             }
         }
     }
+
+
+    // TODO: RANDOMIZED CHEST-LOOT
+
 
 
     public Material getPartner(Material mat) {

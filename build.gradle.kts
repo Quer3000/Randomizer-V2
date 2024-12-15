@@ -10,7 +10,7 @@ plugins {
 
 group = "xyz.motz"
 version = "3.1.0-SNAPSHOT"
-val apiVersion = "1.13"
+val apiVersion = "1.21.3"
 
 application {
     mainClass.set("xyz.motz.randomizer.main.Randomizer")
@@ -27,7 +27,7 @@ repositories {
 
 dependencies {
     // Minecraft specific
-    compileOnly("org.spigotmc:spigot-api:1.13.2-R0.1-SNAPSHOT") // SPIGOT API
+    compileOnly("org.spigotmc:spigot-api:1.21.3-R0.1-SNAPSHOT") // SPIGOT API
 
     // not minecraft specific
     compileOnly("org.projectlombok:lombok:1.18.22") // Lombok
@@ -47,5 +47,5 @@ tasks.compileJava {
 }
 
 tasks.runServer {
-    minecraftVersion("1.18.2")
+    minecraftVersion("1.21.3")
 }
