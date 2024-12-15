@@ -4,9 +4,18 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Creeper;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityDropItemEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.motz.randomizer.commands.*;
@@ -24,6 +33,14 @@ public class Randomizer extends JavaPlugin implements Listener {
 
     public boolean enabled = this.getConfig().getBoolean("activated");
 
+    public static Randomizer getPlugin() {
+        return plugin;
+    }
+
+    public static void setPlugin(Randomizer plugin) {
+        Randomizer.plugin = plugin;
+    }
+
     @Override
     public void onLoad() {
         plugin = this;
@@ -35,21 +52,55 @@ public class Randomizer extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().registerEvents(new CommandTabListener(), this);
 
         getCommand("randomizer").setExecutor(new RandomizerCommand());
-
         this.getConfig().options().copyDefaults();
         saveDefaultConfig();
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
+            if (this.enabled) {
+                e.setDropItems(false);
+                if (e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+                    e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
+                            new ItemStack(getPartner(e.getBlock().getType())));
+                }
+        }
+    }
+
+    // TNT EXPLOSIONS DROP THE RANDOMIZED ITEMS
+    @EventHandler
+    public void onBlockExplode(BlockExplodeEvent event) {
         if (this.enabled) {
-            e.setDropItems(false);
-            if (e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
-                e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
-                        new ItemStack(getPartner(e.getBlock().getType())));
+            event.setYield(0.0F);
+            event.blockList().forEach(block -> {
+                block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(getPartner(block.getType())));
+                block.setType(Material.AIR); // Ensure the block is removed
+            });
+        }
+    }
+    // CREPER EXPLOSIONS DROP THE RANDOMIZED ITEMS
+    @EventHandler
+    public void onEntityExplode(EntityExplodeEvent event) {
+        if (this.enabled) {
+            event.setYield(0.0F);
+            event.blockList().forEach(block -> {
+                block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(getPartner(block.getType())));
+                block.setType(Material.AIR);
+            });
+        }
+    }
+
+    @EventHandler // RECOGNISE WHEN FALLING BLOCKS ARE DESTROYED
+    public void fallingBlocks(EntityDropItemEvent event) {
+        if (this.enabled) {
+            if (event.getEntityType().equals(EntityType.FALLING_BLOCK)) {
+                event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(),
+                            new ItemStack(getPartner(event.getItemDrop().getItemStack().getType())));
+                event.getItemDrop().remove();
             }
         }
     }
+
 
     public Material getPartner(Material mat) {
         Material randpart;

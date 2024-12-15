@@ -1,10 +1,11 @@
 name: Randomizer
 main: xyz.motz.randomizer.main.Randomizer
-author: motz0815
+author: querlenker
 version: @version@
 api-version: @apiVersion@
 
-website: "https://www.spigotmc.org/resources/randomizer-1-13-1-17-x.77069/"
+website: "https://www.spigotmc.org/resources/randomizer-1-13-1-17-x.77069/" # TODO: CHANGE IT TO MY LINK
+description: "The ultimate Randomizer for your Minecraft Server!"
 
 commands:
   randomizer:

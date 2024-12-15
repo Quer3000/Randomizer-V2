@@ -7,9 +7,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import xyz.motz.randomizer.main.Randomizer;
 
+import java.util.List;
 import java.util.Random;
 
 public class ShuffleCommand implements CommandExecutor {
+
+    private List<?> blacklist;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -23,6 +26,11 @@ public class ShuffleCommand implements CommandExecutor {
 
         for (Material mat : Material.values()) {
             if (!Randomizer.getPlugin().remaining.isEmpty()) {
+
+
+                blacklist = Randomizer.getPlugin().getConfig().getList("blocks-blacklist");
+                if(!blacklist.contains(mat)){
+
                 if (mat.isBlock()) {
                     Random r = new Random();
                     int rand;
@@ -34,10 +42,16 @@ public class ShuffleCommand implements CommandExecutor {
                     Randomizer.getPlugin().getConfig().set("partners." + mat, Randomizer.getPlugin().remaining.get(rand).toString());
                     Randomizer.getPlugin().remaining.remove(rand);
                 }
-
+                }
+            }
             }
 
-        }
+        // TODO: SHUFFLE IT FOR MOBS
+
+
+
+
+
         Randomizer.getPlugin().saveConfig();
 
         sender.sendMessage(ChatColor.AQUA + "[RANDOMIZER] " + ChatColor.GREEN

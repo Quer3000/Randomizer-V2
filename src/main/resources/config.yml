@@ -1,11 +1,36 @@
-# Randomizer @version@ by motz0815
-# Here, the random block - item partners are listed
-# Changing this per hand is not recommended, although if you do it correctly, it should work.
-# If nothing except "partners:" is in here, you haven't typed the command "/randomizer shuffle" on this server once.
+# Randomizer @version@ by querlenker (a fork of motz0815´s plugin)
 #
-# The Plugin is activated by default, if you want to deactivate it, use the ingame command "/randomizer stop"
+#
 # Adjusting this value here will not change anything until you reload or restart the server itself.
+
+
+
+# The Plugin is activated by default, if you want to deactivate it, use the ingame command "/randomizer stop"
 
 activated: true
 
+# The blacklist is a list of items, that the plugin won't use as randomized items for BLOCKS!
+blocks-blacklist:
+  - MATERIAL.AIR
+  - MATERIAL.WATER
+  - MATERIAL.LAVA
+  - MATERIAL.FIRE
+  - MATERIAL.BEDROCK
+  - MATERIAL.JIGSAW
+  - MATERIAL.COMMAND_BLOCK
+  - MATERIAL.STRUCTURE_BLOCK
+
+mobs-blacklist:
+  - ENTITY_TYPE.ENDER_DRAGON
+
+
+# SAVING ALL THE RANDOMIZED ITEMS HERE
+# Changing this per hand is not recommended, although if you do it correctly, it should work.
+# If nothing except "partners:" is in here, you haven't typed the command "/randomizer shuffle" on this server once.
+
+# Here, the random block - item partners are listed
 partners:
+
+# Here, the random mob - item partners are listed
+partners-mobs:
+
