@@ -14,6 +14,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -27,6 +28,8 @@ import java.util.List;
 public class Randomizer extends JavaPlugin implements Listener {
 
     public List<Material> remaining = new ArrayList<>();
+    public List<Material> remainingmobs = new ArrayList<>();
+
 
     @Getter
     public static Randomizer plugin;
@@ -95,8 +98,25 @@ public class Randomizer extends JavaPlugin implements Listener {
         if (this.enabled) {
             if (event.getEntityType().equals(EntityType.FALLING_BLOCK)) {
                 event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(),
-                            new ItemStack(getPartner(event.getItemDrop().getItemStack().getType())));
+                        new ItemStack(getPartner(event.getItemDrop().getItemStack().getType())));
                 event.getItemDrop().remove();
+            } else {
+                event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(),
+                        new ItemStack(getPartnerMobs(event.getEntityType())));
+                event.getItemDrop().remove();
+
+            }
+        }
+    }
+
+    @EventHandler
+    public void onEntityDeath(EntityDeathEvent event) {
+        if (this.enabled) {
+            if (!event.getEntityType().equals(EntityType.PLAYER)) {
+
+            event.getDrops().clear();
+              event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(),
+            new ItemStack(getPartnerMobs(event.getEntityType())));
             }
         }
     }
@@ -108,6 +128,16 @@ public class Randomizer extends JavaPlugin implements Listener {
             randpart = Material.valueOf(this.getConfig().getString("partners." + mat.toString()));
         } catch (Exception e) {
             randpart = mat;
+        }
+        return randpart;
+    }
+
+    public Material getPartnerMobs(EntityType mob) {
+        Material randpart;
+        try {
+            randpart = Material.valueOf(this.getConfig().getString("partners-mobs." + mob.toString()));
+        } catch (Exception e) {
+            randpart = null;
         }
         return randpart;
     }

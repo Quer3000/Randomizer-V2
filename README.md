@@ -10,10 +10,10 @@ For documentation and Usage see the spigot or Hangar page:
 - https://www.spigotmc.org/resources/randomizer-1-13-2-1-18-2.77069/
 - https://hangar.papermc.io/motz/Randomizer
 
-## Contributing
-### Building it yourself
-Firstly, clone this repo into an empty folder. Ensure whatever IDE you're using is set to use Java 11.
+## Contribution
+If you want to contribute to this project, you can do so by forking this repo and creating a pull request.
 
-Then, run `./gradlew build`, or if on Windows, `gradlew build`.
 
-Resulting jars will land in `build/libs/`. From there, to get the working version, choose the one with -all.jar at the end.
+- Fork of the Plugin ([@querlenker](https://github.com/querlenker))
+- Original Plugin ([@motz0815](https://github.com/motz0815))
+

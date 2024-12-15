@@ -1,3 +1,4 @@
+# TODO: NEED TO FIX CONFIG.yml after /randomizer shuffle
 # Randomizer @version@ by querlenker (a fork of motz0815´s plugin)
 #
 #
@@ -10,7 +11,8 @@
 activated: true
 
 # The blacklist is a list of items, that the plugin won't use as randomized items for BLOCKS!
-blocks-blacklist:
+
+blacklist:
   - MATERIAL.AIR
   - MATERIAL.WATER
   - MATERIAL.LAVA
@@ -19,9 +21,7 @@ blocks-blacklist:
   - MATERIAL.JIGSAW
   - MATERIAL.COMMAND_BLOCK
   - MATERIAL.STRUCTURE_BLOCK
-
-mobs-blacklist:
-  - ENTITY_TYPE.ENDER_DRAGON
+  - MATERIAL.BARRIER
 
 
 # SAVING ALL THE RANDOMIZED ITEMS HERE
@@ -29,8 +29,10 @@ mobs-blacklist:
 # If nothing except "partners:" is in here, you haven't typed the command "/randomizer shuffle" on this server once.
 
 # Here, the random block - item partners are listed
-partners:
+
+partners: {}
 
 # Here, the random mob - item partners are listed
-partners-mobs:
+
+partners-mobs: {}
 
