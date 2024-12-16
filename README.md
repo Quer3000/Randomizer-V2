@@ -1,16 +1,22 @@
 # Randomizer
 A Minecraft Plugin for some ULTIMATE SURVIVAL CHALLENGE!
+FEATURES:
+- Randomized Crafting
+- Randomized MobDrops
+  - Fixed Boat Drops 
+- Randomized Chest-Loot
+- Randomized BlockBreaking
+  - Fixed TNT/Creeper Explosions
+  - Fixed Falling Blocks (Sand, Gravel, ConcretePowder,...) 
+- ***BLACKLIST ITEMS people would not receive!***
 
-For documentation and Usage see the spigot page of the original plugin:
-- https://www.spigotmc.org/resources/randomizer-1-13-2-1-18-2.77069/
-  (We will do our own WIKI soon, if you need help add me on Discord: querlenker)
 
 ## Contribution
 If you want to contribute to this project, you can do so by forking this repo and creating a pull request.
 
 
-- Fork of the Plugin ([@quer3000](https://github.com/quer3000))
-- Original Plugin ([@motz0815](https://github.com/motz0815))
+- This plugin is enhanced by ([@quer3000](https://github.com/quer3000))
+- This plugin is a fork of ([@motz0815](https://github.com/motz0815))
 
 ### NEED TO FIX
 - KELP, BAMBOO, CACTUS, SUGARCANE breaking at the bottom - the other items are not randomized
