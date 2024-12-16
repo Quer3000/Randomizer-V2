@@ -10,15 +10,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityDropItemEvent;
-import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.ItemStack;
@@ -75,13 +74,48 @@ public class Randomizer extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (this.enabled) {
+            if (e.getBlock().getType().equals(Material.KELP_PLANT) || e.getBlock().getType().equals(Material.KELP)) {
+                e.setDropItems(false);
+                e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
+                        new ItemStack(getPartner(e.getBlock().getType())));
+                Block block = e.getBlock();
+                dropItemsAbove(block);
+            } else {
             e.setDropItems(false);
             if (e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
                 e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
                         new ItemStack(getPartner(e.getBlock().getType())));
             }
+            }
         }
     }
+
+    // TODO: NO DIFFERENCE BETWEEN TOP AND OTHER KELP
+    // TODO: FIX CACTUS BEING DESTROYED BY BLOCKS
+
+    // FIX FOR CACTUS, KELP; SUGARCANE; BAMBOO breaking at the bottom.
+    private void dropItemsAbove(Block block) {
+        Block aboveBlock = block.getLocation().add(0, 1, 0).getBlock();
+        while (aboveBlock.getType().equals(Material.KELP_PLANT) || aboveBlock.getType().equals(Material.KELP)) {
+            // Break the plant block naturally
+            aboveBlock.getDrops().clear();
+            aboveBlock.getWorld().dropItemNaturally(aboveBlock.getLocation(),
+                    new ItemStack(getPartner(aboveBlock.getType())));
+            aboveBlock.breakNaturally();
+// TODO: NEED TO FIX KELP DROPPING AT BLOCKS ABOVE
+            // CONTINUE WITH ALL BLOCKS ABOVE
+            aboveBlock = aboveBlock.getLocation().add(0, 1, 0).getBlock();
+
+        }
+    }
+    // Remove Dragon-EGG teleporting
+    @EventHandler
+    public void dragonEggTpEvent(BlockFromToEvent event) {
+        if (event.getBlock().getType().equals(Material.DRAGON_EGG)) {
+            event.setCancelled(true);
+        }
+    }
+
 
     // TNT EXPLOSIONS DROP THE RANDOMIZED ITEMS
     @EventHandler
@@ -163,7 +197,6 @@ public class Randomizer extends JavaPlugin implements Listener {
             }
         }
     }
-// TODO:FIX FOR SUGARCANE, CACTUS, KELP, BAMBOO
 
     public Material getPartner(Material mat) {
         Material randpart;
