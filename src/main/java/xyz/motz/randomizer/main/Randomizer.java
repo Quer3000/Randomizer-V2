@@ -10,13 +10,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Interaction;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
-import org.bukkit.event.block.BlockFromToEvent;
-import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.world.LootGenerateEvent;
@@ -108,11 +106,13 @@ public class Randomizer extends JavaPlugin implements Listener {
 
         }
     }
-    // Remove Dragon-EGG teleporting
+    // FIXED DRAGON_EGG
     @EventHandler
-    public void dragonEggTpEvent(BlockFromToEvent event) {
+    public void dragonEggTpEvent(BlockDropItemEvent event) {
         if (event.getBlock().getType().equals(Material.DRAGON_EGG)) {
-            event.setCancelled(true);
+            event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(),
+                    new ItemStack(getPartner(event.getBlock().getType())));
+            event.getBlock().getDrops().clear();
         }
     }
 
