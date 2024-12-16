@@ -76,8 +76,6 @@ public class Randomizer extends JavaPlugin implements Listener {
                     || e.getBlock().getType().equals(Material.KELP)
                     || e.getBlock().getType().equals(Material.SUGAR_CANE)
                     || e.getBlock().getType().equals(Material.CACTUS)
-                    || e.getBlock().getType().equals(Material.LEGACY_CACTUS)
-                    || e.getBlock().getType().equals(Material.LEGACY_SUGAR_CANE_BLOCK)
                     || e.getBlock().getType().equals(Material.BAMBOO)
             ) {
                 e.setDropItems(false);
@@ -95,30 +93,24 @@ public class Randomizer extends JavaPlugin implements Listener {
         }
     }
 
-//    // STOP WATER / WATER-BUCKETS TO DESTROY BLOCKS, ITEMS -  DOES NOT WORK
-//    public void onWaterFlood(BlockFromToEvent event){
-//        if (event.getBlock().getType() == Material.WATER || event.getBlock().getType() == Material.WATER_BUCKET){
-//            if (
-//                    event.getToBlock().getType() == Material.BEETROOT_SEEDS
-//                    ||event.getToBlock().getType() == Material.MELON_SEEDS
-//                    ||event.getToBlock().getType() == Material.PUMPKIN_SEEDS
-//                    ||event.getToBlock().getType() == Material.WHEAT_SEEDS
-//                    ||event.getToBlock().getType() == Material.TORCHFLOWER_SEEDS
-//                    ||event.getToBlock().getType() == Material.PUMPKIN_SEEDS
-//                    ||event.getToBlock().getType() == Material.CARROT
-//                    ||event.getToBlock().getType() == Material.CARROTS
-//                    ||event.getToBlock().getType() == Material.POTATO
-//                    ||event.getToBlock().getType() == Material.POTATOES
-//                    ||event.getToBlock().getType() == Material.WHEAT
-//                    // TODO: add other things, like small grass, small fern, large grass,...
-//            ){
-//                event.getToBlock().getWorld().dropItemNaturally(event.getToBlock().getLocation(),
-//                        new ItemStack(getPartner(event.getToBlock().getType())));
-//                event.getToBlock().getDrops().clear();
-//                event.getToBlock().setType(Material.AIR);
-//            }
-//        }
-//    }
+    //  FIXED CROPS; REDSTONE, FLOWERS; GRASS; FARN, BUTTONS AND LEVERSCROPS BEING DESTROYED BY WATER
+    @EventHandler
+    public void onWaterFlood(BlockFromToEvent event){
+        if (this.enabled) {
+            if (event.getBlock().getType() == Material.WATER || event.getBlock().getType() == Material.WATER_BUCKET){
+
+            if (event.getToBlock().getType().isBlock() && !event.getToBlock().getType().equals(Material.AIR)
+                    && !event.getToBlock().getType().equals(Material.WATER) && !event.getToBlock().getType().equals(Material.LAVA)
+            ) {
+                event.getToBlock().getWorld().dropItemNaturally(event.getToBlock().getLocation(),
+                        new ItemStack(getPartner(event.getToBlock().getType())));
+                event.getToBlock().getDrops().clear();
+                event.getToBlock().setType(Material.AIR);
+                event.setCancelled(true);
+            }
+            }
+        }
+    }
 
     // TODO: FIX CACTUS, BAMBOO; SUGARCANE; KELP BEING DESTROYED BY PISTONS (CACTUS PLACED A BLOCK NEXT TO IT) OR BREAKING THE BLOCK BELOW
 
@@ -129,8 +121,6 @@ public class Randomizer extends JavaPlugin implements Listener {
                 || aboveBlock.getType().equals(Material.KELP)
                 || aboveBlock.getType().equals(Material.SUGAR_CANE)
                 || aboveBlock.getType().equals(Material.CACTUS)
-                || aboveBlock.getType().equals(Material.LEGACY_CACTUS)
-                || aboveBlock.getType().equals(Material.LEGACY_SUGAR_CANE_BLOCK)
                 || aboveBlock.getType().equals(Material.BAMBOO)
         ) {
             // Break the plant block naturally

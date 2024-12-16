@@ -19,12 +19,19 @@ If you want to contribute to this project, you can do so by forking this repo an
 - This plugin is a fork of ([@motz0815](https://github.com/motz0815))
 
 ### NEED TO FIX
-- If you destroy 2 slabs above each-other just one random item will be dropped. - 2 Slabs --> 1 Random Item
-- WHEAT, CARROTS and all other crops drop when harvested with water or being jumped on... same counts for seeds
+
+- If you destroy 2 slabs above each-other just one random item will be dropped. - 2 Slabs --> 1 Random Item#
+
 - SAPLINGS and STICKS drop from TREES due to the natural disappearing of the trees
-- WATER AND BLOCKS, like seeds... (FIXED THE WATER-PART FOR SOME CROPS AND BLOCKS; NEED TO ADD MORE)
+
+- FIX JUMPING ON CROPS
+
 - NEED TO FIX CHORUS-FRUIT _ TREES
+
 - FIX CACTUS, BAMBOO; SUGARCANE; KELP BEING DESTROYED BY PISTONS OR BREAKING THE BLOCK BELOW
+
 - FOUND A BUG AT CRAFTING (if you press a slot and change the item, it randomizes the other item... for you)
+
 ## TODO
 - ADD SETTINGS (GUI OR CONFIG) to configure Chest-Loot-, Crafting- and Block-Randomizer.
+
