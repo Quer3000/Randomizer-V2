@@ -28,10 +28,9 @@ If you want to contribute to this project, you can do so by forking this repo an
 
 - NEED TO FIX CHORUS-FRUIT _ TREES
 
-- FIX CACTUS, BAMBOO; SUGARCANE; KELP BEING DESTROYED BY PISTONS
-
 - FOUND A BUG AT CRAFTING (if you press a slot and change the item, it randomizes the other item... for you)
 
+- Sometimes still Sugarcane for example (i saw it there) still gets destroyed and drops sugarcane with water.
 ## TODO
 - ADD SETTINGS (GUI OR CONFIG) to configure Chest-Loot-, Crafting- and Block-Randomizer.
 

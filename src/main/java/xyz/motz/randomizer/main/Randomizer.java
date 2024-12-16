@@ -6,6 +6,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Creeper;
@@ -94,7 +95,25 @@ public class Randomizer extends JavaPlugin implements Listener {
         }
     }
 
-    //  FIXED CROPS; REDSTONE, FLOWERS; GRASS; FARN, BUTTONS AND LEVERSCROPS BEING DESTROYED BY WATER
+
+// FIXED CACTUS, BAMBOO; SUGARCANE; KELP and all other blocks (BROKEN) BEING DESTROYED BY PISTON
+    @EventHandler
+    public void onPistonExtend(BlockPistonExtendEvent e) {
+        if (this.enabled) {
+            for (Block block : e.getBlocks()) {
+                if (block.getPistonMoveReaction().equals(PistonMoveReaction.BREAK)) {
+                    block.getWorld().dropItemNaturally(block.getLocation(),
+                            new ItemStack(getPartner(block.getType())));
+                    block.setType(Material.AIR);
+                    block.getDrops().clear();
+                    dropItemsAbove(block);
+                }
+            }
+                }
+              }
+
+
+    //  FIXED CROPS; REDSTONE, FLOWERS; GRASS; FARN, BUTTONS, LEVER AND CROPS BEING DESTROYED BY WATER
     @EventHandler
     public void onWaterFlood(BlockFromToEvent event){
         if (this.enabled) {
@@ -113,7 +132,6 @@ public class Randomizer extends JavaPlugin implements Listener {
         }
     }
 
-    // TODO: FIX CACTUS, BAMBOO; SUGARCANE; KELP BEING DESTROYED BY PISTONS (CACTUS PLACED A BLOCK NEXT TO IT) OR BREAKING THE BLOCK BELOW
 
     // FIX FOR CACTUS, KELP; SUGARCANE; BAMBOO breaking at the bottom.
     private void dropItemsAbove(Block block) {
