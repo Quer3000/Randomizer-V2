@@ -20,7 +20,7 @@ If you want to contribute to this project, you can do so by forking this repo an
 
 ### NEED TO FIX
 
-- If you destroy 2 slabs above each-other just one random item will be dropped. - 2 Slabs --> 1 Random Item#
+- If you destroy 2 slabs above each-other just one random item will be dropped. - 2 Slabs --> 1 Random Item
 
 - SAPLINGS and STICKS drop from TREES due to the natural disappearing of the trees
 
@@ -28,7 +28,7 @@ If you want to contribute to this project, you can do so by forking this repo an
 
 - NEED TO FIX CHORUS-FRUIT _ TREES
 
-- FIX CACTUS, BAMBOO; SUGARCANE; KELP BEING DESTROYED BY PISTONS OR BREAKING THE BLOCK BELOW
+- FIX CACTUS, BAMBOO; SUGARCANE; KELP BEING DESTROYED BY PISTONS
 
 - FOUND A BUG AT CRAFTING (if you press a slot and change the item, it randomizes the other item... for you)
 

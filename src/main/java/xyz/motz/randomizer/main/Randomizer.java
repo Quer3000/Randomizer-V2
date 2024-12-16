@@ -88,6 +88,7 @@ public class Randomizer extends JavaPlugin implements Listener {
             if (e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
                 e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
                         new ItemStack(getPartner(e.getBlock().getType())));
+                dropItemsAbove(e.getBlock());
             }
             }
         }
