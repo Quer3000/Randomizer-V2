@@ -182,11 +182,14 @@ public class Randomizer extends JavaPlugin implements Listener {
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
         if (this.enabled) {
-            event.setYield(0.0F);
-            event.blockList().forEach(block -> {
-                block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(getPartner(block.getType())));
-                block.setType(Material.AIR);
-            });
+            if (event.getEntityType().equals(EntityType.CREEPER) || event.getEntityType().equals(EntityType.PRIMED_TNT) || event.getEntityType().equals(EntityType.MINECART_TNT)) {
+
+                event.setYield(0.0F);
+                event.blockList().forEach(block -> {
+                    block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(getPartner(block.getType())));
+                    block.setType(Material.AIR);
+                });
+            }
         }
     }
 
