@@ -72,7 +72,14 @@ public class Randomizer extends JavaPlugin implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (this.enabled) {
-            if (e.getBlock().getType().equals(Material.KELP_PLANT) || e.getBlock().getType().equals(Material.KELP)) {
+            if (e.getBlock().getType().equals(Material.KELP_PLANT)
+                    || e.getBlock().getType().equals(Material.KELP)
+                    || e.getBlock().getType().equals(Material.SUGAR_CANE)
+                    || e.getBlock().getType().equals(Material.CACTUS)
+                    || e.getBlock().getType().equals(Material.LEGACY_CACTUS)
+                    || e.getBlock().getType().equals(Material.LEGACY_SUGAR_CANE_BLOCK)
+                    || e.getBlock().getType().equals(Material.BAMBOO)
+            ) {
                 e.setDropItems(false);
                 e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
                         new ItemStack(getPartner(e.getBlock().getType())));
@@ -94,19 +101,26 @@ public class Randomizer extends JavaPlugin implements Listener {
     // FIX FOR CACTUS, KELP; SUGARCANE; BAMBOO breaking at the bottom.
     private void dropItemsAbove(Block block) {
         Block aboveBlock = block.getLocation().add(0, 1, 0).getBlock();
-        while (aboveBlock.getType().equals(Material.KELP_PLANT) || aboveBlock.getType().equals(Material.KELP)) {
+        while (aboveBlock.getType().equals(Material.KELP_PLANT)
+                || aboveBlock.getType().equals(Material.KELP)
+                || aboveBlock.getType().equals(Material.SUGAR_CANE)
+                || aboveBlock.getType().equals(Material.CACTUS)
+                || aboveBlock.getType().equals(Material.LEGACY_CACTUS)
+                || aboveBlock.getType().equals(Material.LEGACY_SUGAR_CANE_BLOCK)
+                || aboveBlock.getType().equals(Material.BAMBOO)
+        ) {
             // Break the plant block naturally
-            aboveBlock.getDrops().clear();
             aboveBlock.getWorld().dropItemNaturally(aboveBlock.getLocation(),
                     new ItemStack(getPartner(aboveBlock.getType())));
-            aboveBlock.breakNaturally();
-// TODO: NEED TO FIX KELP DROPPING AT BLOCKS ABOVE
+            aboveBlock.getDrops().clear();
+            aboveBlock.setType(Material.AIR);
+
             // CONTINUE WITH ALL BLOCKS ABOVE
             aboveBlock = aboveBlock.getLocation().add(0, 1, 0).getBlock();
 
         }
     }
-    // FIXED DRAGON_EGG
+    // Remove Dragon-EGG teleporting
     @EventHandler
     public void dragonEggTpEvent(BlockDropItemEvent event) {
         if (event.getBlock().getType().equals(Material.DRAGON_EGG)) {
