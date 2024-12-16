@@ -22,28 +22,22 @@ public class ShuffleCommand implements CommandExecutor {
     private File itemsFile;
     private FileConfiguration itemsConfig;
 
-    public ShuffleCommand() {
-        Randomizer plugin = Randomizer.getPlugin();
-        itemsFile = new File(plugin.getDataFolder(), "items.yml");
-
-        // Create items.yml if it doesn't exist
-        if (!itemsFile.exists()) {
-            try {
-                itemsFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        itemsConfig = YamlConfiguration.loadConfiguration(itemsFile);
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Randomizer plugin = Randomizer.getPlugin();
         Randomizer.getPlugin().remaining.clear();
+
+
+        if (plugin.itemsConfig == null) {
+            plugin.initializeItemsConfig();
+        }
+
+        FileConfiguration itemsConfig = plugin.itemsConfig;
+        
         itemsConfig.set("blocks", null);
         itemsConfig.set("mobs", null);
+        itemsConfig.set("items", null);
+
 
         plugin.remaining.clear();
         for (Material mat : Material.values()) {
@@ -109,18 +103,15 @@ public class ShuffleCommand implements CommandExecutor {
             }
         }
 
-
-        // Save the items configuration
         try {
-            itemsConfig.save(itemsFile);
+            itemsConfig.save(plugin.itemsFile);
+            sender.sendMessage(ChatColor.AQUA + "[RANDOMIZER] " + ChatColor.GREEN
+                    + "The Random Pairs were successfully regenerated!");
+            return true;
         } catch (IOException e) {
+            sender.sendMessage(ChatColor.RED + "Failed to save randomization configuration!");
             e.printStackTrace();
-            sender.sendMessage(ChatColor.RED + "Failed to save randomization!");
             return false;
-        }
-
-        sender.sendMessage(ChatColor.AQUA + "[RANDOMIZER] " + ChatColor.GREEN
-                + "The Random Pairs were successfully regenerated! Restart the server to apply the changes!");
-        return true;
-    }
+        } 
+    } 
 }

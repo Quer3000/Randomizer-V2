@@ -27,6 +27,7 @@ import xyz.motz.randomizer.commands.*;
 import xyz.motz.randomizer.listeners.CommandTabListener;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +41,8 @@ public class Randomizer extends JavaPlugin implements Listener {
     public static Randomizer plugin;
 
     public boolean enabled = this.getConfig().getBoolean("activated");
-    private FileConfiguration itemsConfig;
-    private File itemsFile;
+    public FileConfiguration itemsConfig;
+    public File itemsFile;
 
     public static Randomizer getPlugin() {
         return plugin;
@@ -67,11 +68,7 @@ public class Randomizer extends JavaPlugin implements Listener {
 
 
         // Initialize items.yml
-        itemsFile = new File(getDataFolder(), "items.yml");
-        if (!itemsFile.exists()) {
-            saveResource("items.yml", false);
-        }
-        itemsConfig = YamlConfiguration.loadConfiguration(itemsFile);
+        initializeItemsConfig();
 
     }
 
@@ -196,5 +193,32 @@ public class Randomizer extends JavaPlugin implements Listener {
             randpart = mat;
         }
         return randpart;
+    }
+
+    // New method to initialize or reload items configuration
+    public void initializeItemsConfig() {
+        itemsFile = new File(getDataFolder(), "items.yml");
+        if (!itemsFile.exists()) {
+            saveResource("items.yml", false);
+        }
+        itemsConfig = YamlConfiguration.loadConfiguration(itemsFile);
+    }
+
+    // Method to reload items configuration
+    public void reloadItemsConfig() {
+        if (itemsFile == null) {
+            itemsFile = new File(getDataFolder(), "items.yml");
+        }
+        itemsConfig = YamlConfiguration.loadConfiguration(itemsFile);
+    }
+
+    // Save items configuration
+    public void saveItemsConfig() {
+        try {
+            itemsConfig.save(itemsFile);
+        } catch (IOException e) {
+            getLogger().severe("Could not save items configuration to " + itemsFile);
+            e.printStackTrace();
+        }
     }
 }
