@@ -95,8 +95,32 @@ public class Randomizer extends JavaPlugin implements Listener {
         }
     }
 
-    // TODO: NO DIFFERENCE BETWEEN TOP AND OTHER KELP
-    // TODO: FIX CACTUS BEING DESTROYED BY BLOCKS
+//    // STOP WATER / WATER-BUCKETS TO DESTROY BLOCKS, ITEMS -  DOES NOT WORK
+//    public void onWaterFlood(BlockFromToEvent event){
+//        if (event.getBlock().getType() == Material.WATER || event.getBlock().getType() == Material.WATER_BUCKET){
+//            if (
+//                    event.getToBlock().getType() == Material.BEETROOT_SEEDS
+//                    ||event.getToBlock().getType() == Material.MELON_SEEDS
+//                    ||event.getToBlock().getType() == Material.PUMPKIN_SEEDS
+//                    ||event.getToBlock().getType() == Material.WHEAT_SEEDS
+//                    ||event.getToBlock().getType() == Material.TORCHFLOWER_SEEDS
+//                    ||event.getToBlock().getType() == Material.PUMPKIN_SEEDS
+//                    ||event.getToBlock().getType() == Material.CARROT
+//                    ||event.getToBlock().getType() == Material.CARROTS
+//                    ||event.getToBlock().getType() == Material.POTATO
+//                    ||event.getToBlock().getType() == Material.POTATOES
+//                    ||event.getToBlock().getType() == Material.WHEAT
+//                    // TODO: add other things, like small grass, small fern, large grass,...
+//            ){
+//                event.getToBlock().getWorld().dropItemNaturally(event.getToBlock().getLocation(),
+//                        new ItemStack(getPartner(event.getToBlock().getType())));
+//                event.getToBlock().getDrops().clear();
+//                event.getToBlock().setType(Material.AIR);
+//            }
+//        }
+//    }
+
+    // TODO: FIX CACTUS, BAMBOO; SUGARCANE; KELP BEING DESTROYED BY PISTONS (CACTUS PLACED A BLOCK NEXT TO IT) OR BREAKING THE BLOCK BELOW
 
     // FIX FOR CACTUS, KELP; SUGARCANE; BAMBOO breaking at the bottom.
     private void dropItemsAbove(Block block) {
