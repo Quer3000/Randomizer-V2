@@ -3,6 +3,7 @@ main: xyz.motz.randomizer.main.Randomizer
 author: querlenker
 version: @version@
 api-version: @apiVersion@
+folia-supported: true
 
 description: "The ultimate Randomizer for your Minecraft Server!"
 

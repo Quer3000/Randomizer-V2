@@ -163,7 +163,7 @@ public class Randomizer extends JavaPlugin implements Listener {
             }
         }
     }
-
+// TODO:FIX FOR SUGARCANE, CACTUS, KELP, BAMBOO
 
     public Material getPartner(Material mat) {
         Material randpart;
