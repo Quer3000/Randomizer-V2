@@ -119,13 +119,15 @@ public class Randomizer extends JavaPlugin implements Listener {
 
     // TNT EXPLOSIONS DROP THE RANDOMIZED ITEMS
     @EventHandler
-    public void onBlockExplode(BlockExplodeEvent event) {
+    public void onBlockExplode(EntityExplodeEvent event) {
         if (this.enabled) {
+            if (event.getEntityType().equals(EntityType.CREEPER) || event.getEntityType().equals(EntityType.PRIMED_TNT) || event.getEntityType().equals(EntityType.MINECART_TNT)) {
             event.setYield(0.0F);
             event.blockList().forEach(block -> {
                 block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(getPartner(block.getType())));
                 block.setType(Material.AIR); // Ensure the block is removed
             });
+        }
         }
     }
 
