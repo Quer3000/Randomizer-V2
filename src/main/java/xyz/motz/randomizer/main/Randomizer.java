@@ -18,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -210,6 +211,31 @@ public class Randomizer extends JavaPlugin implements Listener {
     }
 
     @EventHandler
+    public void playerJumpOnFarmland(PlayerInteractEvent event) {
+        if (event.getAction() != Action.PHYSICAL) return;
+
+        Block block = event.getClickedBlock();
+        if (block == null || block.getType() != Material.FARMLAND) return;
+
+        Block aboveBlock = block.getRelative(0, 1, 0);
+        if (isCrop(aboveBlock.getType())) {
+            aboveBlock.getWorld().dropItemNaturally(aboveBlock.getLocation(), new ItemStack(getPartner(aboveBlock.getType())));
+            aboveBlock.setType(Material.AIR);
+        }
+    }
+
+    private boolean isCrop(Material type) {
+        return type == Material.WHEAT ||
+                type == Material.BEETROOTS ||
+                type == Material.CARROTS ||
+                type == Material.POTATOES ||
+                type == Material.MELON_STEM ||
+                type == Material.PUMPKIN_STEM;
+    }
+
+
+
+    @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
         if (this.enabled) {
             if (!event.getEntityType().equals(EntityType.PLAYER)) {
@@ -234,7 +260,7 @@ public class Randomizer extends JavaPlugin implements Listener {
         }
     }
 
-    // RANDOMIZED CHEST-LOOT#
+    // RANDOMIZED CHEST-LOOT
     @EventHandler
     public void chestLoot(LootGenerateEvent event) {
         if (this.enabled) {

@@ -24,13 +24,12 @@ If you want to contribute to this project, you can do so by forking this repo an
 
 - SAPLINGS and STICKS drop from TREES due to the natural disappearing of the trees
 
-- FIX JUMPING ON CROPS
-
 - NEED TO FIX CHORUS-FRUIT _ TREES
 
-- FOUND A BUG AT CRAFTING (if you press a slot and change the item, it randomizes the other item... for you)
+- FOUND A BUG AT CRAFTING (if you press a slot which is already full it will get the item of the result and so on, it randomizes the other item... for you)
 
-- Sometimes still Sugarcane for example (i saw it there) still gets destroyed and drops sugarcane with water.
+- Sometimes still Sugarcane for example (I saw it there) still gets destroyed and drops sugarcane with water.
+
 ## TODO
 - ADD SETTINGS (GUI OR CONFIG) to configure Chest-Loot-, Crafting- and Block-Randomizer.
 
