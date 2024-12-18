@@ -9,15 +9,15 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Creeper;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Interaction;
-import org.bukkit.entity.Item;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.world.LootGenerateEvent;
 import org.bukkit.inventory.ItemStack;
@@ -28,6 +28,7 @@ import xyz.motz.randomizer.listeners.CommandTabListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Randomizer extends JavaPlugin implements Listener {
@@ -261,7 +262,25 @@ public class Randomizer extends JavaPlugin implements Listener {
     public void crafting(CraftItemEvent event) {
         if (this.enabled) {
             if (event.getInventory().getResult() != null) {
-                event.getInventory().setResult(new ItemStack(getPartnerItem(event.getInventory().getResult().getType())));
+               // event.getInventory().setResult(new ItemStack(getPartnerItem(event.getInventory().getResult().getType())));
+                event.setCurrentItem(new ItemStack(getPartnerItem(event.getInventory().getResult().getType())));
+            }
+        }
+    }
+
+    @EventHandler
+    public void crafting1(CraftItemEvent event) {
+        if (this.enabled) {
+            // Check if the crafting result is not null
+            if (event.getInventory().getResult() != null) {
+                // Check the click type to prevent unintended randomization
+                ClickType clickType = event.getClick();
+
+
+                    // Create a new ItemStack with the randomized type
+                    ItemStack randomizedItem = new ItemStack(getPartnerItem(event.getRecipe().getResult().getType()));
+                    // Set the new randomized result
+                    event.getInventory().setResult(randomizedItem);
             }
         }
     }
