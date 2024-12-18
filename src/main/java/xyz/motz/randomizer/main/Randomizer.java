@@ -164,6 +164,14 @@ public class Randomizer extends JavaPlugin implements Listener {
 
         }
     }
+ // ON LEAVES DECAY
+    @EventHandler
+    public void onLeavesDecay(LeavesDecayEvent e){
+        Block block = e.getBlock();
+        e.setCancelled(true);
+    }
+
+
 
     // Chorus Fruit (End fix)
     private void dropItemsAboveChorusFruit(Block block) {
