@@ -86,13 +86,22 @@ public class Randomizer extends JavaPlugin implements Listener {
                         new ItemStack(getPartner(e.getBlock().getType())));
                 Block block = e.getBlock();
                 dropItemsAbove(block);
-            } else {
-            e.setDropItems(false);
-            if (e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+            } else if (e.getBlock().getType() == Material.CHORUS_PLANT
+                    || e.getBlock().getType() == Material.CHORUS_FRUIT
+                    || e.getBlock().getType() == Material.CHORUS_FLOWER) {
+                e.setDropItems(false);
                 e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
                         new ItemStack(getPartner(e.getBlock().getType())));
-                dropItemsAbove(e.getBlock());
-            }
+                Block block = e.getBlock();
+                dropItemsAboveChorusFruit(e.getBlock());
+
+            } else {
+                e.setDropItems(false);
+                if (e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)) {
+                    e.getBlock().getWorld().dropItemNaturally(e.getBlock().getLocation(),
+                            new ItemStack(getPartner(e.getBlock().getType())));
+                    dropItemsAbove(e.getBlock());
+                }
             }
         }
     }
@@ -155,6 +164,39 @@ public class Randomizer extends JavaPlugin implements Listener {
 
         }
     }
+
+    // Chorus Fruit (End fix)
+    private void dropItemsAboveChorusFruit(Block block) {
+        destroyChorusBlock(block);
+
+        // Check adjacent blocks in all directions except below
+        Block[] adjacentBlocks = {
+                block.getRelative(0, 1, 0),   // Above
+                block.getRelative(1, 0, 0),   // East
+                block.getRelative(-1, 0, 0),  // West
+                block.getRelative(0, 0, 1),   // South
+                block.getRelative(0, 0, -1)   // North
+        };
+
+        for (Block adjacentBlock : adjacentBlocks) {
+            if (checkForChorus(adjacentBlock)) {
+                dropItemsAboveChorusFruit(adjacentBlock);
+            }
+        }
+    }
+
+    private void destroyChorusBlock(Block block) {
+        // Drop a random item instead of the chorus block item
+        block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(getPartner(block.getType())));
+        // Remove the block
+        block.setType(Material.AIR);
+    }
+
+    private boolean checkForChorus(Block block) {
+        Material type = block.getType();
+        return type == Material.CHORUS_PLANT || type == Material.CHORUS_FLOWER;
+    }
+
     // Remove Dragon-EGG teleporting
     @EventHandler
     public void dragonEggTpEvent(BlockDropItemEvent event) {
@@ -258,15 +300,6 @@ public class Randomizer extends JavaPlugin implements Listener {
     }
 
     // RANDOMIZED CRAFTING
-    @EventHandler
-    public void crafting(CraftItemEvent event) {
-        if (this.enabled) {
-            if (event.getInventory().getResult() != null) {
-               // event.getInventory().setResult(new ItemStack(getPartnerItem(event.getInventory().getResult().getType())));
-                event.setCurrentItem(new ItemStack(getPartnerItem(event.getInventory().getResult().getType())));
-            }
-        }
-    }
 
     @EventHandler
     public void crafting1(CraftItemEvent event) {
@@ -300,6 +333,7 @@ public class Randomizer extends JavaPlugin implements Listener {
             }
         }
     }
+
 
     public Material getPartner(Material mat) {
         Material randpart;
