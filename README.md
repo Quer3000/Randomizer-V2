@@ -21,4 +21,4 @@ If you want to contribute to this project, you can do so by forking this repo an
 
 ## TODO
 - ADD SETTINGS (GUI OR CONFIG) to configure Chest-Loot-, Crafting- and Block-Randomizer.
-
+- Blacklist seem to have some problems!
